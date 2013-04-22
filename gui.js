@@ -31,3 +31,33 @@ function appendFriendDom(id, name, profile_pic_url) {
   tr.append(td);
   table.attr("data-num-of-displayed-friends", numOfDisplayedFriends + 1);
 }
+
+function appendSearchBox(searchHandler) {
+  var searchWrapper = $("<div>").text("Type friends name:");
+  var searchBox = $("<input>")
+     .attr("id", "friend-search-text")
+     .keydown(function() {
+       var keyword = $("#friend-search-text").val();
+       searchHandler(keyword);
+     });
+  searchWrapper.append(searchBox);
+  $("body").append(searchWrapper);
+}
+
+function showSearchResult(result, clickHandler) {
+  var searchResultWrapper = $("#search-result-wrapper");
+  if (searchResultWrapper.length == 0) {
+    searchResultWrapper = $("<div>").attr("id", "search-result-wrapper");
+    $("body").append(searchResultWrapper);
+  } else {
+    searchResultWrapper.empty();
+  }
+  for (var i = 0; i < result.length; i++) {
+    var element = $("<div>").text(result[i].name);
+    element.click(
+        (function(id) {
+          return function() {clickHandler(id);}
+        })(result[i].id));
+    searchResultWrapper.append(element);
+  }
+}
