@@ -13,11 +13,7 @@ function fetchAndDisplayFriends(numOfDisplay) {
       }
       sample.friends = response.data;
       for (var i = 0; i < sample.friends.length && i < numOfDisplay; i++) {
-        var friend = sample.friends[i];
-        appendFriendDom(
-            friend.id, 
-            friend.name,
-            friend.picture.data.url);
+        appendFriendDom(sample.friends[i]);
       }
       appendSearchBox(searchFriends);
     });

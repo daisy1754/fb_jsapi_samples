@@ -13,7 +13,11 @@ function hideLoginButton() {
 }
 
 NUM_OF_COLUMN = 5;
-function appendFriendDom(id, name, profile_pic_url) {
+function appendFriendDom(friend) {
+  var id = friend.id;
+  var name = friend.name;
+  var profile_pic_url = friend.picture.data.url;
+
   var table = $("#friends_table");
   var numOfDisplayedFriends 
       = parseInt(table.attr("data-num-of-displayed-friends"));
