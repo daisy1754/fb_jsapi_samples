@@ -5,6 +5,7 @@
   <body>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <div id="status_text">Initial state</div>
+    <div id="search_box_wrapper"></div>
     <table id="friends_table" data-num-of-displayed-friends="0">
       
     </table>
@@ -16,7 +17,7 @@
       window.fbAsyncInit = function() {
         fbinit();
         handleAfterAuthorized(function() {
-          displayStatusUpdate("auth success! start data fetching");
+          displayStatusUpdate("auth success! start data fetching: You can click friends below to start messaging he or she");
           fetchAndDisplayFriends(12);
         });
       }

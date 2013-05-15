@@ -13,7 +13,7 @@ function hideLoginButton() {
 }
 
 NUM_OF_COLUMN = 5;
-function appendFriendDom(friend) {
+function appendFriendDom(friend, clickHandler) {
   var id = friend.id;
   var name = friend.name;
   var profile_pic_url = friend.picture.data.url;
@@ -32,8 +32,13 @@ function appendFriendDom(friend) {
       .append("<img src='" + profile_pic_url + "'>")
       .append("<div>id: " + id + "</div>")
       .append("<div>name: " + name + "</div>");
+  td.click(clickHandler.bind(null, id));
   tr.append(td);
   table.attr("data-num-of-displayed-friends", numOfDisplayedFriends + 1);
+}
+
+function clearFriendsDoms() {
+  $("#friends_table").empty();
 }
 
 function appendSearchBox(searchHandler) {
@@ -45,23 +50,12 @@ function appendSearchBox(searchHandler) {
        searchHandler(keyword);
      });
   searchWrapper.append(searchBox);
-  $("body").append(searchWrapper);
+  $("#search_box_wrapper").append(searchWrapper);
 }
 
 function showSearchResult(result, clickHandler) {
-  var searchResultWrapper = $("#search-result-wrapper");
-  if (searchResultWrapper.length == 0) {
-    searchResultWrapper = $("<div>").attr("id", "search-result-wrapper");
-    $("body").append(searchResultWrapper);
-  } else {
-    searchResultWrapper.empty();
-  }
+  clearFriendsDoms();
   for (var i = 0; i < result.length; i++) {
-    var element = $("<div>").text(result[i].name);
-    element.click(
-        (function(id) {
-          return function() {clickHandler(id);}
-        })(result[i].id));
-    searchResultWrapper.append(element);
+    appendFriendDom(result[i], clickHandler);
   }
 }

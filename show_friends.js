@@ -5,17 +5,17 @@ sample.friends = [];
 
 function fetchAndDisplayFriends(numOfDisplay) {
   FB.api('/me/friends', 
-      {fields: ['id', 'name', 'email', 'picture']}, 
-      function(response) {
-        if (!response || response.error) {
+    {fields: ['id', 'name', 'email', 'picture']}, 
+    function(response) {
+      if (!response || response.error) {
         // TODO: error handling
         return;
       }
+      appendSearchBox(searchFriends);
       sample.friends = response.data;
       for (var i = 0; i < sample.friends.length && i < numOfDisplay; i++) {
-        appendFriendDom(sample.friends[i]);
+        appendFriendDom(sample.friends[i], sendMessageToId);
       }
-      appendSearchBox(searchFriends);
     });
 }
 
@@ -26,7 +26,7 @@ function searchFriends(keyword) {
       searchResult.push(sample.friends[i]);
     }
   }
-  showSearchResult(searchResult, sendMessageToId);
+  showSearchResult(searchResult.slice(0, 20), sendMessageToId);
 }
 
 function startWith(text, subText) {
